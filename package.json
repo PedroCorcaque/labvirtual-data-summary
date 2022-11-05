@@ -1,0 +1,39 @@
+{
+  "name": "laboratoriovirtual",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "client": "npm start",
+    "database": "node src/Services/db/conn.js",
+    "server": "node src/Services/server.js",
+    "routes": "node src/Services/routes/record.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run database\" \"npm run routes\""
+  },
+  "dependencies": {
+    "concurrently": "^7.5.0",
+    "dotenv": "^16.0.3",
+    "expo": "~46.0.16",
+    "expo-status-bar": "~1.4.0",
+    "express": "^4.18.2",
+    "metro-core": "^0.73.3",
+    "mongodb": "^4.11.0",
+    "mongodb-legacy": "^4.0.0",
+    "react": "18.0.0",
+    "react-native": "0.69.6",
+    "react-native-paper": "^3.12.0",
+    "react-native-vector-icons": "^9.2.0",
+    "react-navigation": "^4.4.4",
+    "react-navigation-header-buttons": "^10.0.0",
+    "react-navigation-material-bottom-tabs": "^2.3.5",
+    "react-navigation-stack": "^2.10.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9"
+  },
+  "private": true,
+  "proxy": "http://10.0.0.205:5000/"
+}
