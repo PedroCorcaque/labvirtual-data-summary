@@ -1,42 +1,57 @@
-import React, { Component, useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import app from "../Services/routes.js";
+import React, { useState } from "react";
+import { Button, StyleSheet, SafeAreaView } from "react-native";
+import { CalendarList, Calendar } from "react-native-calendars";
 
-const body_request = {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        "api-key": process.env.API_KEY_MONGODB_LABVIRTUAL,
-        "dataSource": "LabvitualData",
-        "database": "DBLabvirtual",
-        "collection": "Dados_Sensores"
-    })
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "space-around"
+    }
+});
+
+const formatDate = (initialDate) => {
+    let strDate = initialDate.toString();
+    let splitedDate = strDate.split("-");
+    let reversedArrayDate = splitedDate.reverse();
+    let finalDate = reversedArrayDate.join("/");
+
+    return finalDate;
 }
 
 const DataSummary = () => {
 
-    useEffect(async () => {    
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://10.0.0.205:5000/sensors/08092022", body_request);
-                const json = await response.json();
-                console.log(json);
-            } catch {
-                console.log("")
-            }
-        };
-    
-        fetchData();
-    }, []);
+    const [date, setDate] = useState("");
 
     return (
-        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ color: "#009045", fontSize: 40 }}>
-                Aqui serão amostrados os dados em forma de estatísticas resumidas!
-            </Text>
-        </View>
+        <SafeAreaView style={ styles.container }>
+            <Calendar 
+                minDate={"2022-07-01"}
+                maxDate={"2022-11-05"}
+                onDayPress={day => {
+                    console.log("Selected day", day);
+                    setDate(day);
+                    console.log("date", date.dateString);
+                    console.log("new_data", formatDate(date.dateString));
+                }}
+                onDayLongPress={day => {
+                    console.log("Selected day", day);
+                }}
+                monthFormat={"MM/yyyy"}
+                onMonthChange={month => {
+                    console.log("Month changed", month)
+                }}
+                hideArrows={true}
+                renderArrow={direction => <Arrow />}
+                hideExtraDays={true}
+                enableSwipeMonths={true} />
+
+            <Button
+                title="Get analysis"
+                color="#009045"
+                onPress={() => console.log("Clicou aqui!")}
+            />
+        </SafeAreaView>
     );
 }
 

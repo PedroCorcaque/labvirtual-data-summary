@@ -2,15 +2,15 @@ import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
-import HomeScreen from "./screens/HomeScreen";
-import DataSummary from "./screens/DataSummaryScreen";
-import SettingScreen from "./screens/SettingScreen";
+import HomeScreen from "./src/Pages/HomeScreen";
+import DataSummary from "./src/Pages/DataSummaryScreen";
+import InfoScreen from "./src/Pages/InfoScreen";
 
 const AppNavigator = createStackNavigator(
   {
     Home: HomeScreen,
     DataSummary: DataSummary,
-    Setting: SettingScreen,
+    Info: InfoScreen,
   },
   {
     defaultNavigationOptions: {
@@ -38,26 +38,3 @@ export default function App() {
     </Navigator>
   );
 }
-
-
-
-// import { StatusBar } from 'expo-status-bar';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Hello World!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
