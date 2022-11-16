@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, SafeAreaView, View, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Button, StyleSheet, SafeAreaView, View } from "react-native";
 import { Calendar } from "react-native-calendars";
-import {
-    Item,
-    HeaderButton,
-    HeaderButtons,
-} from "react-navigation-header-buttons";
 
 const styles = StyleSheet.create({
     container: {
@@ -23,6 +17,18 @@ const formatDate = (initialDate) => {
     let finalDate = reversedArrayDate.join("/");
 
     return finalDate;
+}
+
+const getDataFromDate = (date) => {
+    try {
+        fetch(`http://10.0.0.205:5000/readings/?id=${date}`, {
+            method: "POST"
+        })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+    } catch (err) {
+        console.log("An error occured in fetch:", err);
+    }
 }
 
 const DataSummary = () => {
@@ -46,9 +52,6 @@ const DataSummary = () => {
                                 console.log("Selected day", day);
                             }}
                             monthFormat={"MM/yyyy"}
-                            onMonthChange={month => {
-                                console.log("Month changed", month)
-                            }}
                             hideArrows={true}
                             renderArrow={direction => <Arrow />}
                             hideExtraDays={true}
@@ -59,17 +62,19 @@ const DataSummary = () => {
                             color="#009045"
                             onPress={() => {
                                 setShouldShow(!shouldShow);
+                                getDataFromDate(date);
                             }}
                         />
                     </View>
                 ) : (
-                <Text>
-                    <Button
-                        title="Voltar ao calendário"
-                        color="#009045"
-                        onPress={() => setShouldShow(!shouldShow)}
-                    />
-                </Text>)}      
+                    <View style={ styles.container }>
+                        <Button
+                            title="Voltar ao calendário"
+                            color="#009045"
+                            onPress={() => setShouldShow(!shouldShow)}
+                        />
+                    </View>
+                )}      
             </View>       
         </SafeAreaView>
     );
