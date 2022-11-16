@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, SafeAreaView, View } from "react-native";
+import { Button, StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { Calendar } from "react-native-calendars";
 
 const styles = StyleSheet.create({
@@ -24,8 +24,7 @@ const getDataFromDate = (date) => {
         fetch(`http://10.0.0.205:5000/readings/?id=${date}`, {
             method: "POST"
         })
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+        .then((response) => response.json());
     } catch (err) {
         console.log("An error occured in fetch:", err);
     }
@@ -36,6 +35,8 @@ const DataSummary = () => {
     const [date, setDate] = useState("");
     const [shouldShow, setShouldShow] = useState(true);
 
+    const currentDate = new Date();
+
     return (
         <SafeAreaView style={ styles.container }>
             <View>
@@ -43,7 +44,7 @@ const DataSummary = () => {
                     <View style={ styles.container }>
                         <Calendar 
                             minDate={"2022-07-01"}
-                            maxDate={"2022-11-05"}
+                            maxDate={currentDate.getFullYear().toString()+"-"+(currentDate.getMonth()+1).toString()+"-"+currentDate.getDate().toString()}
                             onDayPress={day => {
                                 var formatedDate = formatDate(day.dateString);
                                 setDate(formatedDate);
@@ -52,10 +53,8 @@ const DataSummary = () => {
                                 console.log("Selected day", day);
                             }}
                             monthFormat={"MM/yyyy"}
-                            hideArrows={true}
-                            renderArrow={direction => <Arrow />}
-                            hideExtraDays={true}
-                            enableSwipeMonths={true} />
+                            hideExtraDays={false}
+                            enableSwipeMonths={false} />
 
                         <Button
                             title="Ver análises"
