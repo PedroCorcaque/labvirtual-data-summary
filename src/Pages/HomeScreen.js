@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Button, Linking, StyleSheet, SafeAreaView } from "react-native";
+import { Text, View, Button, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
     Item,

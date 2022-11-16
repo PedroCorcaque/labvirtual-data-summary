@@ -1,6 +1,12 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, SafeAreaView } from "react-native";
-import { CalendarList, Calendar } from "react-native-calendars";
+import { Button, StyleSheet, SafeAreaView, View, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { Calendar } from "react-native-calendars";
+import {
+    Item,
+    HeaderButton,
+    HeaderButtons,
+} from "react-navigation-header-buttons";
 
 const styles = StyleSheet.create({
     container: {
@@ -22,35 +28,49 @@ const formatDate = (initialDate) => {
 const DataSummary = () => {
 
     const [date, setDate] = useState("");
+    const [shouldShow, setShouldShow] = useState(true);
 
     return (
         <SafeAreaView style={ styles.container }>
-            <Calendar 
-                minDate={"2022-07-01"}
-                maxDate={"2022-11-05"}
-                onDayPress={day => {
-                    console.log("Selected day", day);
-                    setDate(day);
-                    console.log("date", date.dateString);
-                    console.log("new_data", formatDate(date.dateString));
-                }}
-                onDayLongPress={day => {
-                    console.log("Selected day", day);
-                }}
-                monthFormat={"MM/yyyy"}
-                onMonthChange={month => {
-                    console.log("Month changed", month)
-                }}
-                hideArrows={true}
-                renderArrow={direction => <Arrow />}
-                hideExtraDays={true}
-                enableSwipeMonths={true} />
+            <View>
+                {shouldShow ? (
+                    <View style={ styles.container }>
+                        <Calendar 
+                            minDate={"2022-07-01"}
+                            maxDate={"2022-11-05"}
+                            onDayPress={day => {
+                                var formatedDate = formatDate(day.dateString);
+                                setDate(formatedDate);
+                            }}
+                            onDayLongPress={day => {
+                                console.log("Selected day", day);
+                            }}
+                            monthFormat={"MM/yyyy"}
+                            onMonthChange={month => {
+                                console.log("Month changed", month)
+                            }}
+                            hideArrows={true}
+                            renderArrow={direction => <Arrow />}
+                            hideExtraDays={true}
+                            enableSwipeMonths={true} />
 
-            <Button
-                title="Get analysis"
-                color="#009045"
-                onPress={() => console.log("Clicou aqui!")}
-            />
+                        <Button
+                            title="Ver análises"
+                            color="#009045"
+                            onPress={() => {
+                                setShouldShow(!shouldShow);
+                            }}
+                        />
+                    </View>
+                ) : (
+                <Text>
+                    <Button
+                        title="Voltar ao calendário"
+                        color="#009045"
+                        onPress={() => setShouldShow(!shouldShow)}
+                    />
+                </Text>)}      
+            </View>       
         </SafeAreaView>
     );
 }
