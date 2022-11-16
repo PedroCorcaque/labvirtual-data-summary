@@ -33,9 +33,11 @@ const getDataFromDate = (date) => {
 const DataSummary = () => {
 
     const [date, setDate] = useState("");
+    const [markedDay, setMarketDay] = useState("");
     const [shouldShow, setShouldShow] = useState(true);
 
     const currentDate = new Date();
+    const currentDateString = currentDate.getFullYear().toString()+"-"+(currentDate.getMonth()+1).toString()+"-"+currentDate.getDate().toString()
 
     return (
         <SafeAreaView style={ styles.container }>
@@ -44,13 +46,14 @@ const DataSummary = () => {
                     <View style={ styles.container }>
                         <Calendar 
                             minDate={"2022-07-01"}
-                            maxDate={currentDate.getFullYear().toString()+"-"+(currentDate.getMonth()+1).toString()+"-"+currentDate.getDate().toString()}
+                            maxDate={ currentDateString }
                             onDayPress={day => {
+                                setMarketDay(day.dateString);
                                 var formatedDate = formatDate(day.dateString);
                                 setDate(formatedDate);
                             }}
-                            onDayLongPress={day => {
-                                console.log("Selected day", day);
+                            markedDates={{
+                                [markedDay]: {selected: true}
                             }}
                             monthFormat={"MM/yyyy"}
                             hideExtraDays={false}
