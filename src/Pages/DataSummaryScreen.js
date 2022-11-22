@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, SafeAreaView, View, Text } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
-import {
-    Item,
-    HeaderButton,
-    HeaderButtons,
-} from "react-navigation-header-buttons";
 
 const styles = StyleSheet.create({
     container: {

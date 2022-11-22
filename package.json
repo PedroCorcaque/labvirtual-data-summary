@@ -11,7 +11,7 @@
     "database": "node src/Services/db/conn.js",
     "server": "node src/Services/server.js",
     "routes": "node src/Services/routes/record.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run database\" \"npm run routes\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\""
   },
   "dependencies": {
     "concurrently": "^7.5.0",
@@ -37,5 +37,5 @@
     "@babel/core": "^7.12.9"
   },
   "private": true,
-  "proxy": "http://10.0.0.205:5000/"
+  "proxy": "http://10.0.0.202:5818/"
 }

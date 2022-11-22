@@ -1,9 +1,13 @@
-require("dotenv").config();
+require("dotenv").config({
+    path: "src/Services/config.env"
+});
 const express = require("express");
 const record = require("./routes/record");
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 const app = express();
+
+app.use(express.json());
 
 app.use(record);
 
