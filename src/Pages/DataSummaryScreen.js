@@ -19,10 +19,25 @@ const formatDate = (initialDate) => {
     return finalDate;
 }
 
+const getDataFromDate = (date) => {
+    try {
+        fetch(`http://10.0.0.205:5000/readings/?id=${date}`, {
+            method: "POST"
+        })
+        .then((response) => response.json());
+    } catch (err) {
+        console.log("An error occured in fetch:", err);
+    }
+}
+
 const DataSummary = () => {
 
     const [date, setDate] = useState("");
+    const [markedDay, setMarketDay] = useState("");
     const [shouldShow, setShouldShow] = useState(true);
+
+    const currentDate = new Date();
+    const currentDateString = currentDate.getFullYear().toString()+"-"+(currentDate.getMonth()+1).toString()+"-"+currentDate.getDate().toString()
 
     return (
         <SafeAreaView style={ styles.container }>
@@ -31,39 +46,37 @@ const DataSummary = () => {
                     <View style={ styles.container }>
                         <Calendar 
                             minDate={"2022-07-01"}
-                            maxDate={"2022-11-05"}
+                            maxDate={ currentDateString }
                             onDayPress={day => {
+                                setMarketDay(day.dateString);
                                 var formatedDate = formatDate(day.dateString);
                                 setDate(formatedDate);
                             }}
-                            onDayLongPress={day => {
-                                console.log("Selected day", day);
+                            markedDates={{
+                                [markedDay]: {selected: true}
                             }}
                             monthFormat={"MM/yyyy"}
-                            onMonthChange={month => {
-                                console.log("Month changed", month)
-                            }}
-                            hideArrows={true}
-                            renderArrow={direction => <Arrow />}
-                            hideExtraDays={true}
-                            enableSwipeMonths={true} />
+                            hideExtraDays={false}
+                            enableSwipeMonths={false} />
 
                         <Button
                             title="Ver análises"
                             color="#009045"
                             onPress={() => {
                                 setShouldShow(!shouldShow);
+                                getDataFromDate(date);
                             }}
                         />
                     </View>
                 ) : (
-                <Text>
-                    <Button
-                        title="Voltar ao calendário"
-                        color="#009045"
-                        onPress={() => setShouldShow(!shouldShow)}
-                    />
-                </Text>)}      
+                    <View style={ styles.container }>
+                        <Button
+                            title="Voltar ao calendário"
+                            color="#009045"
+                            onPress={() => setShouldShow(!shouldShow)}
+                        />
+                    </View>
+                )}      
             </View>       
         </SafeAreaView>
     );
