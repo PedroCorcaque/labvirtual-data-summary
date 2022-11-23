@@ -11,12 +11,10 @@
     "database": "node src/Services/db/conn.js",
     "server": "node src/Services/server.js",
     "routes": "node src/Services/routes/record.js",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\""
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm start\""
   },
   "dependencies": {
     "concurrently": "^7.5.0",
-    "crypto": "^1.0.1",
-    "crypto-js": "^4.1.1",
     "dns": "^0.2.2",
     "dotenv": "^16.0.3",
     "events": "^3.3.0",
@@ -30,6 +28,7 @@
     "react": "18.0.0",
     "react-native": "0.69.6",
     "react-native-calendars": "^1.1275.0",
+    "react-native-dotenv": "^3.4.2",
     "react-native-paper": "^3.12.0",
     "react-native-vector-icons": "^9.2.0",
     "react-navigation": "^4.4.4",
@@ -42,7 +41,8 @@
     "zlib": "^1.0.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4"
   },
   "private": true,
   "proxy": "http://10.0.0.202:5818/"
