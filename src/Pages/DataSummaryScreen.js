@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Button, StyleSheet, SafeAreaView, View, Text } from "react-native";
 import { Calendar } from "react-native-calendars";
+import {REACT_APP_API_URL, REACT_APP_API_KEY} from "@env"
+
+// const API_URL = process.env.REACT_APP_API_URL;
+// const API_KEY = process.env.REACT_APP_API_KEY;
 
 const styles = StyleSheet.create({
     container: {
@@ -17,17 +21,6 @@ const formatDate = (initialDate) => {
     let finalDate = reversedArrayDate.join("/");
 
     return finalDate;
-}
-
-const getDataFromDate = (date) => {
-    try {
-        fetch(`http://10.0.0.205:5000/readings/?id=${date}`, {
-            method: "POST"
-        })
-        .then((response) => response.json());
-    } catch (err) {
-        console.log("An error occured in fetch:", err);
-    }
 }
 
 const DataSummary = () => {
@@ -64,7 +57,22 @@ const DataSummary = () => {
                             color="#009045"
                             onPress={() => {
                                 setShouldShow(!shouldShow);
-                                getDataFromDate(date);
+                                
+                                var data = {
+                                    method: "POST",
+                                    body: JSON.stringify({
+                                        "id": date
+                                    }),
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "api-key": REACT_APP_API_KEY
+                                    }
+                                }
+                                
+                                fetch(`http://10.0.0.202:5818/readings`, data)
+                                    .then(response => response.json())
+                                    .then(json => console.log(json))
+                                    .catch(error => console.log(error));
                             }}
                         />
                     </View>
